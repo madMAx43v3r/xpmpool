@@ -1,0 +1,34 @@
+src/*.exe
+src/primecoin
+src/primecoind
+src/test_primecoin
+.*.swp
+*.*~*
+*.bak
+*.rej
+*.orig
+*.o
+*.patch
+.primecoin
+
+# Compilation and Qt preprocessor part
+*.qm
+Makefile
+primecoin-qt
+Primecoin-Qt.app
+
+# Unit-tests
+Makefile.test
+primecoin-qt_test
+
+# Resources cpp
+qrc_*.cpp
+
+# Qt creator
+*.pro.user
+
+# Mac specific
+.DS_Store
+build
+
+!src/leveldb-*/Makefile
