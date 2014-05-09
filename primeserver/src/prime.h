@@ -86,6 +86,8 @@ std::string GetPrimeOriginPrimorialForm(CBigNum& bnPrimeChainOrigin);
 // Mine probable prime chain of form: n = h * p# +/- 1
 bool MineProbablePrimeChain(CBlock& block, CBigNum& bnFixedMultiplier, bool& fNewBlock, unsigned int& nTriedMultiplier, unsigned int& nProbableChainLength, unsigned int& nTests, unsigned int& nPrimesHit);
 
+bool ProbablePrimeChainTestForMiner(const CBigNum& bnPrimeChainOrigin, unsigned int nBits, unsigned nCandidateType, unsigned int& nChainLength);
+
 // Perform Fermat test with trial division
 // Return values:
 //   true  - passes trial division test and Fermat test; probable prime

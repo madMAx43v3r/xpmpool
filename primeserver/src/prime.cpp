@@ -464,7 +464,7 @@ unsigned int EstimateWorkTransition(unsigned int nPrevWorkTransition, unsigned i
 // Return value:
 //   true - Probable prime chain found (nChainLength meeting target)
 //   false - prime chain too short (nChainLength not meeting target)
-static bool ProbablePrimeChainTestForMiner(const CBigNum& bnPrimeChainOrigin, unsigned int nBits, unsigned nCandidateType, unsigned int& nChainLength)
+bool ProbablePrimeChainTestForMiner(const CBigNum& bnPrimeChainOrigin, unsigned int nBits, unsigned nCandidateType, unsigned int& nChainLength)
 {
     nChainLength = 0;
 

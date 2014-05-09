@@ -6,17 +6,18 @@
 # :=0 --> UPnP support turned off by default at runtime
 # :=1 --> UPnP support turned on by default at runtime
 # :=- --> No UPnP support - miniupnp not required
-USE_UPNP:=0
+USE_UPNP:=-
 
 # :=1 --> Enable IPv6 support
 # :=0 --> Disable IPv6 support
 USE_IPV6:=1
 
+
 LINK:=$(CXX)
 
 DEFS=-DBOOST_SPIRIT_THREADSAFE -D_FILE_OFFSET_BITS=64
 
-DEFS += $(addprefix -I,$(CURDIR) $(CURDIR)/obj $(BOOST_INCLUDE_PATH) $(BDB_INCLUDE_PATH) $(OPENSSL_INCLUDE_PATH))
+DEFS += $(addprefix -I,$(CURDIR) $(CURDIR)/obj $(BOOST_INCLUDE_PATH) $(BDB_INCLUDE_PATH) $(OPENSSL_INCLUDE_PATH) ../../src ../../../utf8_v2_3_4/source)
 LIBS = $(addprefix -L,$(BOOST_LIB_PATH) $(BDB_LIB_PATH) $(OPENSSL_LIB_PATH))
 
 TESTDEFS = -DTEST_DATA_DIR=$(abspath test/data)
@@ -32,6 +33,9 @@ else
 	TESTDEFS += -DBOOST_TEST_DYN_LINK
 endif
 
+#LIBS += $(addprefix /usr/lib/, libwtdbopostgres.a libwtdbo.a libwt.a)
+#LIBS += `GraphicsMagick++-config --libs`
+
 # for boost 1.37, add -mt to the boost libraries
 LIBS += \
  -Wl,-B$(LMODE) \
@@ -39,9 +43,17 @@ LIBS += \
    -l boost_filesystem$(BOOST_LIB_SUFFIX) \
    -l boost_program_options$(BOOST_LIB_SUFFIX) \
    -l boost_thread$(BOOST_LIB_SUFFIX) \
+   -l boost_signals$(BOOST_LIB_SUFFIX) \
+   -l boost_regex$(BOOST_LIB_SUFFIX) \
+   -l boost_date_time$(BOOST_LIB_SUFFIX) \
+   -l boost_random$(BOOST_LIB_SUFFIX) \
    -l db_cxx$(BDB_LIB_SUFFIX) \
    -l ssl \
-   -l crypto
+   -l crypto \
+   -l wtdbopostgres \
+   -l wtdbo \
+   -l wt \
+   -l pq
 
 TESTLIBS += \
  -Wl,-B$(LMODE) \
@@ -144,7 +156,11 @@ OBJS= \
     obj/leveldb.o \
     obj/txdb.o \
     obj/prime.o \
-    obj/checkpointsync.o
+    obj/checkpointsync.o \
+    obj/primeserver.o \
+    obj/pool.o \
+    obj/protocol.pb.o \
+    obj/backend.o
 
 all: primecoind
 
@@ -156,6 +172,7 @@ test check: test_primecoin FORCE
 #
 MAKEOVERRIDES =
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
+LIBS += $(addprefix /usr/local/lib/, libprotobuf.a libczmq.a libzmq.a) -lrt
 DEFS += $(addprefix -I,$(CURDIR)/leveldb/include)
 DEFS += $(addprefix -I,$(CURDIR)/leveldb/helpers)
 leveldb/libleveldb.a:
