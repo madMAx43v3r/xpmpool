@@ -21,7 +21,6 @@ How to compile webserver:
 - Configure libwt include paths etc.
 - OR: just use the existing makefile and set env variables when necessary to find libs
 - Compile
-- OR: just use the existing binary, may work
 
 Use src/build.sh to compile the protobuf definition if needed.
 
