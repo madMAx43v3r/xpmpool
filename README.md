@@ -19,9 +19,16 @@ How to compile primecoind:
 How to compile webserver:
 - Open Eclipse C++ project
 - Configure libwt include paths etc.
+- OR: just use the existing makefile and set env variables when necessary to find libs
 - Compile
+- OR: just use the existing binary, may work
 
 Use src/build.sh to compile the protobuf definition if needed.
 
 Important: When starting the server for the first time use -initwtdb command line option to create all database tables.
+
+Also to enable the pool server (after having synched), primecoind needs to be started with -gen
+
+The webserver needs to be started as:
+./webserver --docroot /usr/local/share/Wt --http-address 0.0.0.0 --http-port 80
 
